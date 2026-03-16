@@ -1,4 +1,4 @@
-# Formula-1-Telemetry-Performance-Modeling-Race-Strategy-Optimization
+# Formula1-Race-Prediction
 
 *Work in Progress — Ongoing Research Project*
 ##  Overview
