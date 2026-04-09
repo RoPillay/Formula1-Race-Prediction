@@ -18,6 +18,7 @@ Qualifying performance is widely believed to be one of the strongest determinant
 - Statistical evaluation of key predictors (qualifying position, driver form, team strength)
 - Binary logistic regression model to predict top-10 finishes
 - Plackett-Luce Model ML model with PCA
+- Realistic Race Simulation utilizing Monte Carlo methods
 
 ## Repository Contents
 - `analysis/` — PDFs summarizing exploratory analysis, modeling ideas, and research notes
