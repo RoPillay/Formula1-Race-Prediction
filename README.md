@@ -7,11 +7,10 @@ This repository contains an ongoing research project focused on modeling Formula
 ## Research Motivation
 Qualifying performance is widely believed to be one of the strongest determinants of Formula 1 race outcomes, yet race-day execution, team strength, and driver form introduce substantial variability. This project aims to quantify these relationships, assess their statistical significance, and build predictive models that move beyond descriptive analysis toward actionable race performance forecasting.
 
-## Key Research Questions (Current Phase)
-- Quantify the relationship between qualifying position and finishing position
-- Evaluate the impact of driver form and team strength on race outcomes
+## Key Research Questions 
+- Quantify the relationship between key predictors of finishing position
 - Develop predictive models for race performance and top-10 finishes
-- Extend analysis toward advanced machine learning and deep learning approaches
+- Utilize statistical and machine learning models to predict race outcomes
 
 ## Current Progress
 - Exploratory data analysis and correlation studies
