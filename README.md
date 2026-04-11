@@ -36,7 +36,6 @@ Qualifying performance is widely believed to be one of the strongest determinant
 
 ## Planned Extensions
 - Reinforcement learning/multi-agent dynamics to optimize strategy
-- Support Vector Machines (SVMs)
 - Deep learning models for race outcome prediction
 - Integration of richer telemetry and strategy features
 
