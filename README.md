@@ -13,6 +13,7 @@ Qualifying performance is widely believed to be one of the strongest determinant
 - Utilize statistical and machine learning models to predict race outcomes
 
 ## Current Progress
+[Current work](https://docs.google.com/document/d/1vVFXrOgcapsdwYac7s4XwOXEpe7JpVclJWCF34v1KCA/edit?tab=t.0)
 - Exploratory data analysis and correlation studies
 - Statistical evaluation of key predictors (qualifying position, driver form, team strength)
 - Binary logistic regression model to predict top-10 finishes
