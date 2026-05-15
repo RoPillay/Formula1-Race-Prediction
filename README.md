@@ -8,9 +8,10 @@ This repository contains an ongoing research project focused on modeling Formula
 Qualifying performance is widely believed to be one of the strongest determinants of Formula 1 race outcomes, yet race-day execution, team strength, and driver form introduce substantial variability. This project aims to quantify these relationships, assess their statistical significance, and build predictive models that move beyond descriptive analysis toward actionable race performance forecasting.
 
 ## Key Research Questions 
-- Quantify the relationship between key predictors of finishing position
-- Develop predictive models for race performance and top-10 finishes
-- Utilize statistical and machine learning models to predict race outcomes
+- How effectivel can telemetry and race features predict Formula 1 race outcomes across multiple seasons?
+- What is the relative impact of certain predictors such as qualifying position, driver form, team strength, and track specific factors in determining final race position?
+- How do ranking approaches such as Plackett-Luce models compare to tradiitonal predictive modeling frameworks for race outcomes?
+- How can stochastic race simulation and probabilistic modeling improve race strategy optimization under uncertainty?
 
 ## Current Progress
 [Current work](https://docs.google.com/document/d/1vVFXrOgcapsdwYac7s4XwOXEpe7JpVclJWCF34v1KCA/edit?tab=t.0)
