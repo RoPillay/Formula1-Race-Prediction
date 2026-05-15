@@ -16,11 +16,11 @@ Qualifying performance is widely believed to be one of the strongest determinant
 
 ## Current Progress
 [Current work](https://docs.google.com/document/d/1vVFXrOgcapsdwYac7s4XwOXEpe7JpVclJWCF34v1KCA/edit?tab=t.0)
-- Exploratory data analysis and correlation studies
-- Statistical evaluation of key predictors (qualifying position, driver form, team strength)
-- Binary logistic regression model to predict top-10 finishes
-- L2- regularized Plackett-Luce Model ML model (with PCA exploration)
-- Realistic race simulation utilizing monte carlo methods
+- Engineered enriched race-context and qualifying-based features across multiple Formula 1 seasons using FastF1 telemetry and official timing data
+- Developed regularized Plackett–Luce ranking models with 5-fold cross-validation for race outcome prediction and finishing-position ranking across multiple seasons
+- Applied feature selection, VIF analysis, correlation analysis, and exploratory statistical evaluation to understand predictor importance and reduce feature redundancy
+- Evaluated model performance using ranking and classification metrics including Spearman correlation, Kendall’s Tau, Top-3 accuracy, and NDCG
+- Implemented Monte Carlo race simulations incorporating lap-time variability, tire degradation, pit strategy, and stochastic race events
 
 ## Repository Contents
 - `analysis/` — PDFs summarizing exploratory analysis, modeling ideas, and research notes
