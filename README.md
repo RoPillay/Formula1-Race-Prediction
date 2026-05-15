@@ -2,7 +2,8 @@
 
 *Work in Progress — Ongoing Research Project*
 ##  Overview
-This repository contains an ongoing research project focused on modeling Formula 1 race performance using telemetry-derived and race-level features. The current phase investigates how qualifying position, team strength, and driver form relate to finishing position and top-10 outcomes using statistical analysis and logistic regression. Future work will extend this framework using advanced machine learning and deep learning models.
+This repository contains an ongoing undergraduate research project focused on statistical and machine learning approaches for Formula 1 race prediction and performance modeling. The project integrates telemetry-derived, qualifying, and race-context features across multiple Formula 1 seasons to model finishing position outcomes, evaluate race strategy, and analyze key performance drivers in stochastic racing environments.
+Current work includes regularized Plackett–Luce ranking models, probabilistic outcome modeling, feature selection and multicollinearity analysis, and Monte Carlo race simulation frameworks for race strategy evaluation.
 
 ## Research Motivation
 Qualifying performance is widely believed to be one of the strongest determinants of Formula 1 race outcomes, yet race-day execution, team strength, and driver form introduce substantial variability. This project aims to quantify these relationships, assess their statistical significance, and build predictive models that move beyond descriptive analysis toward actionable race performance forecasting.
