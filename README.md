@@ -9,7 +9,7 @@ Current work includes regularized Plackett–Luce ranking models, probabilistic 
 Qualifying performance is widely believed to be one of the strongest determinants of Formula 1 race outcomes, yet race-day execution, team strength, and driver form introduce substantial variability. This project aims to quantify these relationships, assess their statistical significance, and build predictive models that move beyond descriptive analysis toward actionable race performance forecasting.
 
 ## Key Research Questions 
-- How effectivel can telemetry and race features predict Formula 1 race outcomes across multiple seasons?
+- How effective is telemetry and race features for predicting Formula 1 race outcomes across multiple seasons?
 - What is the relative impact of certain predictors such as qualifying position, driver form, team strength, and track specific factors in determining final race position?
 - How do ranking approaches such as Plackett-Luce models compare to tradiitonal predictive modeling frameworks for race outcomes?
 - How can stochastic race simulation and probabilistic modeling improve race strategy optimization under uncertainty?
