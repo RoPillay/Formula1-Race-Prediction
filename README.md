@@ -21,7 +21,7 @@ Qualifying performance is widely believed to be one of the strongest determinant
 - Applied feature selection, VIF analysis, correlation analysis, and exploratory statistical evaluation to understand predictor importance and reduce feature redundancy
 - Evaluated model performance using ranking and classification metrics including Spearman correlation, Kendall’s Tau, Top-3 accuracy, and NDCG
 - Implemented Monte Carlo race simulations incorporating lap-time variability, tire degradation, pit strategy, and stochastic race events
-  [Monte Carlo Current Work](https://docs.google.com/document/d/1ThiAwvgyUiQIdqrt58P2OycU6xiBj53fLNOCT1lKM00/edit?tab=t.5mmjmcy4iqi2#heading=h.u2aa18kntqmi)
+  [Monte Carlo Current Work](https://docs.google.com/document/d/1ThiAwvgyUiQIdqrt58P2OycU6xiBj53fLNOCT1lKM00/edit?tab=t.0#heading=h.cw4nznki5hn)
 
 ## Repository Contents
 - `analysis/` — PDFs summarizing exploratory analysis, modeling ideas, and research notes
