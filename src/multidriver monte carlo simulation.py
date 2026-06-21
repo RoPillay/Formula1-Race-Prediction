@@ -1,4 +1,4 @@
-# https://github.com/RoPillay 
+# Full research repository: https://github.com/RoPillay/Formula1-Race-Prediction
 # Multi-driver Monte Carlo Simulation
 import numpy as np
 import pandas as pd
