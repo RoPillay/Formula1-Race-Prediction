@@ -1,19 +1,16 @@
+# https://github.com/RoPillay 
+# Multi-driver Monte Carlo Simulation
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# -----------------------------
-# PARAMETERS
-# -----------------------------
+# Parameters for simulation
 n_simulations = 50000
 n_laps = 57
 lap_time_noise_sd = 0.6
 
-# -----------------------------
-# CREATE BASELINE DRIVER DATA
-# -----------------------------
-
+# Creating baseline pace for drivers
 data = {
     "Driver": [
         "VER","PER","NOR","PIA","LEC","SAI",
@@ -34,42 +31,34 @@ data = {
 
 df = pd.DataFrame(data)
 
-# -----------------------------
-# INPUT DATA
-# -----------------------------
+# Data
 drivers = df["Driver"].values
 baseline = df["BaselineLapTime"].values
 
 n_drivers = len(drivers)
 
-# -----------------------------
-# VECTORISED MONTE CARLO
-# -----------------------------
-
-# generate lap noise
+# Vectorized Monte Carlo
+# Generating lap noise so pace doesn't dominate
 lap_noise = np.random.normal(
     0,
     lap_time_noise_sd,
     size=(n_simulations, n_laps, n_drivers)
 )
 
-# broadcast baseline pace
+# Baseline pace
 baseline_matrix = baseline.reshape(1,1,n_drivers)
 
 lap_times = baseline_matrix + lap_noise
 
-# total race time
+# Total race time
 race_times = lap_times.sum(axis=1)
 
-# determine finishing order
+# Determining finishing order
 positions = np.argsort(np.argsort(race_times, axis=1), axis=1) + 1
 
 results_df = pd.DataFrame(positions, columns=drivers)
 
-# -----------------------------
-# PROBABILITY METRICS
-# -----------------------------
-
+# Calculating Probability Metrics
 win_prob = (results_df == 1).mean()
 podium_prob = (results_df <= 3).mean()
 top10_prob = (results_df <= 10).mean()
@@ -87,10 +76,7 @@ summary = summary.sort_values("ExpectedPosition")
 
 print(summary)
 
-# -----------------------------
-# FINISHING POSITION DISTRIBUTION
-# -----------------------------
-
+# Finishing Position Distribution
 position_distribution = {}
 
 for driver in drivers:
@@ -106,9 +92,7 @@ position_distribution_df = pd.DataFrame(position_distribution).fillna(0)
 print("\nFinishing Position Distribution")
 print(position_distribution_df)
 
-# -----------------------------
-# HEATMAP VISUALIZATION
-# -----------------------------
+# Heatmap
 position_distribution_df = position_distribution_df[summary.index]
 plt.figure(figsize=(14,7))
 
