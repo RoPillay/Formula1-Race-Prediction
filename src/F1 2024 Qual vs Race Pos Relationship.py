@@ -1,7 +1,5 @@
-# ==============================================================
-# F1 2024 | Qualifying vs Finishing Position (All Races, Ordered & Expanded Axes)
-# ==============================================================
-
+# F1 2024 Qualifying vs Finishing Position 
+# Libraries 
 import fastf1
 import pandas as pd
 import numpy as np
@@ -12,8 +10,11 @@ import warnings, os
 
 warnings.filterwarnings("ignore")
 os.makedirs("cache", exist_ok=True)
+
+# Enabling cache for faster loading
 fastf1.Cache.enable_cache(r"C:\\Users\\rohan\\Downloads\\Research STA199\\cache")
 
+# Setting team colors
 TEAM_COLORS = {
     "Red Bull Racing": "#1E5BC6",
     "Ferrari": "#ED1C24",
@@ -27,7 +28,7 @@ TEAM_COLORS = {
     "Williams": "#005AFF"
 }
 
-# === Official 2024 GP list in chronological order ==============
+# All 2024 races in chronological order
 full_2024_gps = [
     "Bahrain Grand Prix", "Saudi Arabian Grand Prix", "Australian Grand Prix", "Japanese Grand Prix",
     "Chinese Grand Prix", "Miami Grand Prix", "Emilia Romagna Grand Prix", "Monaco Grand Prix",
@@ -37,7 +38,7 @@ full_2024_gps = [
     "São Paulo Grand Prix", "Las Vegas Grand Prix", "Qatar Grand Prix", "Abu Dhabi Grand Prix"
 ]
 
-# === Load single race ==========================================
+# Loading a single race
 def load_race(year, gp):
     try:
         session = fastf1.get_session(year, gp, "R")
@@ -61,39 +62,39 @@ def load_race(year, gp):
             "FinishingPosition"
         ] = 21
 
-        # Skip incomplete
+        # Skipping any races with incomplete data
         if df.shape[0] < 10:
-            print(f"⚠️ Skipping incomplete data for {gp}")
+            print(f" Skipped incomplete data for {gp}")
             return pd.DataFrame()
 
-        print(f"✅ Loaded {gp} ({len(df)} entries)")
+        print(f" Loaded {gp} ({len(df)} entries)")
         return df
     except Exception as e:
-        print(f"⚠️ Failed to load {gp}: {e}")
+        print(f" Failed to load {gp}: {e}")
         return pd.DataFrame()
 
-# === Load all 2024 races ======================================
+# Loading all 2024 races 
 year = 2024
 all_races = [load_race(year, gp) for gp in full_2024_gps]
 df = pd.concat([r for r in all_races if not r.empty], ignore_index=True)
 
-print(f"\n✅ Loaded {df['Circuit'].nunique()} circuits, {len(df)} entries total.")
+print(f"\n Loaded {df['Circuit'].nunique()} circuits, {len(df)} entries total.")
 
-# === Clean numeric + delta ====================================
+# Cleaning  
 df = df.dropna(subset=["QualifyingPosition", "FinishingPosition"])
 df["QualifyingPosition"] = df["QualifyingPosition"].astype(int)
 df["FinishingPosition"] = df["FinishingPosition"].astype(int)
 df["DeltaPos"] = df["FinishingPosition"] - df["QualifyingPosition"]
 
-# === Correlation summary ======================================
+# Correlation summary 
 slope, intercept, r_value, p_value, _ = stats.linregress(df["QualifyingPosition"], df["FinishingPosition"])
-print(f"\n📊 Overall correlation: R² = {r_value**2:.3f}, p-value = {p_value:.5f}")
+print(f"\n Overall correlation: R² = {r_value**2:.3f}, p-value = {p_value:.5f}")
 
-# === Ordered by Round =========================================
+# Ordering by Round
 df = df.sort_values("Round").reset_index(drop=True)
 ordered_circuits = df.drop_duplicates("Circuit")[["Circuit", "Round"]].sort_values("Round")["Circuit"].tolist()
 
-# === Plot setup ===============================================
+# Plot setup 
 n_races = len(ordered_circuits)
 cols = 3
 rows = int(np.ceil(n_races / cols))
@@ -104,7 +105,7 @@ fig = make_subplots(
     shared_xaxes=False, shared_yaxes=False
 )
 
-# === Add each subplot =========================================
+# Adding all subplots
 for i, circuit in enumerate(ordered_circuits):
     sub = df[df["Circuit"] == circuit]
     if sub.empty:
@@ -113,18 +114,18 @@ for i, circuit in enumerate(ordered_circuits):
     row = (i // cols) + 1
     col = (i % cols) + 1
 
-    # Perfect finish line
+    # Perfect correlation between qualifying and race position line 
     line_x = np.arange(0.5, 21.5)
     line_y = line_x
 
-    # Scatter
+    # Scatter plot
     for idx, rowdata in sub.iterrows():
         fig.add_trace(
             go.Scatter(
                 x=[rowdata["QualifyingPosition"]],
                 y=[rowdata["FinishingPosition"]],
                 mode="markers+text",
-                text=[rowdata["Driver"]],          # Driver abbreviation on the point
+                text=[rowdata["Driver"]],          
                 textposition="top center",
                 textfont=dict(size=9),
 
@@ -139,7 +140,7 @@ for i, circuit in enumerate(ordered_circuits):
             row=row, col=col
         )
 
-    # Add perfect line
+    # Adding the perfect correlation line
     fig.add_trace(
         go.Scatter(x=line_x, y=line_y, mode="lines",
                    line=dict(color="black", dash="dash"),
@@ -147,10 +148,10 @@ for i, circuit in enumerate(ordered_circuits):
         row=row, col=col
     )
 
-    # Add DNF reference line
+    # Adding DNF reference line
     fig.add_hline(y=21, line=dict(color="red", dash="dot"), row=row, col=col)
 
-# === Layout + axis cleanup ====================================
+# Overall Layout 
 fig.update_xaxes(
     title="Qualifying Position",
     range=[0.5, 21.5], dtick=2,
@@ -162,7 +163,7 @@ fig.update_yaxes(
     tickfont=dict(size=9), title_font=dict(size=11)
 )
 fig.update_layout(
-    title_text="🏎️ F1 2024: Qualifying vs Finishing Position (Ordered by Round)",
+    title_text=" F1 2024: Qualifying vs Finishing Position (Ordered by Round)",
     template="plotly_white",
     height=4000, width=1800,
     font=dict(size=11),
@@ -170,9 +171,9 @@ fig.update_layout(
     margin=dict(t=100, l=60, r=60, b=60)
 )
 
-# === Export ===================================================
+# Exporting 
 output_path = r"C:\Users\rohan\Downloads\F1_2024_Qual_vs_Finish_Ordered.html"
 fig.write_html(output_path, include_plotlyjs="cdn")
 
-print(f"\n💾 Saved interactive file to:\n{output_path}")
+print(f"\n Saved interactive file to:\n{output_path}")
 print("Open directly in your browser — now ordered and unclipped.")
