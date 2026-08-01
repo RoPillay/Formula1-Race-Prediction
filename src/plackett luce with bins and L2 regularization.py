@@ -1,6 +1,6 @@
 import pandas as pd
 
-# Loading raw data 
+# Load raw data (DO NOT manually edit the XLSX)
 df = pd.read_excel(
     "C:/Users/Owner/OneDrive/Download1/Research STA199/F1_2024_Full_Dataset_Predictors_DashboardLogic_24Races (1).xlsx"
 )
@@ -8,8 +8,8 @@ df = pd.read_excel(
 # ------------------Part 1---------------------------
 
 # Structural zeros: team strength & DNF rates
-# These variables are defined such that 0 is a meaningful value
-# Meaning no prior DNFs or points have been achieved yet 
+# These variables are defined such that 0 is a valid, meaningful value
+# (e.g., no prior DNFs, no points accumulated yet).
 zero_fill = [
     "TeamStrength",
     "DriverDNF_Rate",
@@ -19,16 +19,16 @@ zero_fill = [
 df[zero_fill] = df[zero_fill].fillna(0)
 
 # Driver form: neutral baseline for replacements
-# Missing DriverForm indicates no prior race history, so 
-# Impute using the race-level mean to not have artificial
+# Missing DriverForm indicates no prior race history (e.g., replacements).
+# We impute using the race-level mean to avoid imposing artificial
 # driver ability while allowing team strength and qualifying to dominate.
 df["DriverForm"] = (
     df.groupby(["Year", "Round"])["DriverForm"]
       .transform(lambda x: x.fillna(x.mean()))
 )
 
-# Overtake difficulty index 
-# Filled at the race level 
+# Overtake difficulty index (track-level variable)
+# Filled at the race level to ensure consistency across drivers.
 df["OvertakeIndex"] = (
     df.groupby(["Year", "Round"])["OvertakeIndex"]
       .transform(lambda x: x.fillna(x.mean()))
@@ -53,7 +53,7 @@ df["QualiBin"] = df["QualifyingPosition"].apply(bin_quali)
 quali_bin_dummies = pd.get_dummies(
     df["QualiBin"],
     prefix="QualiBin",
-    drop_first=True   
+    drop_first=True   # baseline = Front
 )
 
 df = pd.concat([df, quali_bin_dummies], axis=1)
@@ -71,7 +71,8 @@ continuous_predictors = [
 
 predictors = quali_cols + continuous_predictors
 
-# Final model dataframe
+# Final modeling dataframe
+
 model_df = df[
     ["Year", "Round", "Driver", "RacePosition"] + predictors
 ].copy()
@@ -84,7 +85,7 @@ print(model_df[predictors].isna().sum())
 
 # ------------------Part 2---------------------------
 
-# Standardizing 
+# Standardizing so we can directly compare coefficients
 from sklearn.preprocessing import StandardScaler
 
 scaler = StandardScaler()
@@ -101,13 +102,13 @@ import numpy as np
 races = []
 
 for (year, round_), g in model_df.groupby(["Year", "Round"]):
-    # Sorting drivers by actual race result
+    # Sort drivers by actual race result
     g = g.sort_values("RacePosition")
     
-    # Design matrix 
+    # Design matrix for this race
     X = g[predictors].astype(float).to_numpy()
     
-    
+    # Order is implicit since sorted
     order = np.arange(len(g))
     
     races.append({
@@ -137,7 +138,7 @@ def pl_neg_log_likelihood_l2(beta, races, lambda_l2=1.0):
         
         for i in order:
             theta_rem = theta[remaining]
-            theta_rem = theta_rem - np.max(theta_rem)  
+            theta_rem = theta_rem - np.max(theta_rem)  # stability
             ll += theta[i] - np.log(np.sum(np.exp(theta_rem)))
             remaining.remove(i)
     
@@ -155,7 +156,7 @@ from scipy.optimize import minimize
 
 p = len(predictors)
 beta0 = np.zeros(p)
-lambda_l2 = 1.0  
+lambda_l2 = 1.0  # you can try 0.1, 1.0, 5.0
 
 res = minimize(
     pl_neg_log_likelihood_l2,
@@ -195,11 +196,12 @@ print(results)
 # ------------------Part 7---------------------------
 
 # Model Evaluation
-# Log-likelihood
+
+# a) Log-likelihood
 loglik = -pl_neg_log_likelihood_l2(beta_hat, races, lambda_l2)
 print("Log-likelihood:", loglik)
 
-# Rank Correlation
+# b) Rank Correlation
 from scipy.stats import spearmanr, kendalltau
 
 spearman_scores = []
@@ -216,7 +218,7 @@ for race in races:
 print("Mean Spearman:", np.nanmean(spearman_scores))
 print("Mean Kendall:", np.nanmean(kendall_scores))
 
-# Top-k accuracy
+# c) Top-k accuracy
 top3_acc = []
 
 for race in races:
@@ -257,7 +259,7 @@ for race in races:
             "Year": race["year"],
             "Round": race["round"],
             "Driver": driver,
-            "ActualRacePosition": idx + 1,  
+            "ActualRacePosition": idx + 1,  # valid due to prior sorting
             "PredictedRank": np.where(pred_rank == idx)[0][0] + 1,
             "PL_Win_Probability": win_probs[idx],
             "Race_LogLikelihood": ll_race
@@ -265,7 +267,7 @@ for race in races:
 
 race_driver_df = pd.DataFrame(race_driver_rows)
 
-# Approximate Top-3 probability 
+# Approximate Top-3 probability (clearly labeled)
 race_driver_df["Approx_PL_Top3_Probability"] = (
     race_driver_df["PL_Win_Probability"] * 3
 ).clip(upper=1)

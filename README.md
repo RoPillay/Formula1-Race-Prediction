@@ -9,7 +9,7 @@ Current work includes regularized Plackett–Luce ranking models, probabilistic 
 Qualifying performance is widely believed to be one of the strongest determinants of Formula 1 race outcomes, yet race-day execution, team strength, and driver form introduce substantial variability. This project aims to quantify these relationships, assess their statistical significance, and build predictive models that move beyond descriptive analysis toward actionable race performance forecasting.
 
 ## Key Research Questions 
-- How effective is telemetry and race features for predicting Formula 1 race outcomes across multiple seasons?
+- How effectivel can telemetry and race features predict Formula 1 race outcomes across multiple seasons?
 - What is the relative impact of certain predictors such as qualifying position, driver form, team strength, and track specific factors in determining final race position?
 - How do ranking approaches such as Plackett-Luce models compare to tradiitonal predictive modeling frameworks for race outcomes?
 - How can stochastic race simulation and probabilistic modeling improve race strategy optimization under uncertainty?
@@ -17,11 +17,10 @@ Qualifying performance is widely believed to be one of the strongest determinant
 ## Current Progress
 [Current work](https://docs.google.com/document/d/1vVFXrOgcapsdwYac7s4XwOXEpe7JpVclJWCF34v1KCA/edit?tab=t.0)
 - Engineered enriched race-context and qualifying-based features across multiple Formula 1 seasons using FastF1 telemetry and official timing data
-- Developed regularized Plackett–Luce ranking models with walk forward cross-validation for race outcome prediction and finishing-position ranking across multiple seasons
+- Developed regularized Plackett–Luce ranking models with 5-fold cross-validation for race outcome prediction and finishing-position ranking across multiple seasons
 - Applied feature selection, VIF analysis, correlation analysis, and exploratory statistical evaluation to understand predictor importance and reduce feature redundancy
 - Evaluated model performance using ranking and classification metrics including Spearman correlation, Kendall’s Tau, Top-3 accuracy, and NDCG
 - Implemented Monte Carlo race simulations incorporating lap-time variability, tire degradation, pit strategy, and stochastic race events
-  [Monte Carlo Current Work](https://docs.google.com/document/d/1ThiAwvgyUiQIdqrt58P2OycU6xiBj53fLNOCT1lKM00/edit?tab=t.0#heading=h.cw4nznki5hn)
 
 ## Repository Contents
 - `analysis/` — PDFs summarizing exploratory analysis, modeling ideas, and research notes
