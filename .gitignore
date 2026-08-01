@@ -1,0 +1,19 @@
+# Windows
+desktop.ini
+Thumbs.db
+
+# Claude Code settings
+.claude/
+
+# Large data files
+src/*.csv
+src/v2_f1_enriched_dataset.csv
+src/DEBUGF7_*.csv
+
+# Model run outputs / logs
+src/*.log
+src/*_run_output.txt
+src/*_run_errors.txt
+
+# Compiled output (keep Full Model Research.pdf, ignore the auto-named one)
+anlaysis/F1_Model_Report.pdf
