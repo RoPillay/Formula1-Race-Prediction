@@ -1,6 +1,6 @@
 # Formula1-Race-Prediction
 
-*Work in Progress — Ongoing Research Project*
+
 ##  Overview
 This repository contains an ongoing undergraduate research project focused on statistical and machine learning approaches for Formula 1 race prediction and performance modeling. The project integrates telemetry-derived, qualifying, and race-context features across multiple Formula 1 seasons to model finishing position outcomes, evaluate race strategy, and analyze key performance drivers in stochastic racing environments.
 Current work includes regularized Plackett–Luce ranking models, probabilistic outcome modeling, feature selection and multicollinearity analysis, and Monte Carlo race simulation frameworks for race strategy evaluation.
