@@ -1,0 +1,2 @@
+# Plotly HTML exports are generated files; keep them out of the language stats so GitHub shows Python
+interactive/*.html linguist-generated=true
